@@ -1,0 +1,20 @@
+@inject DragAndDropService DragAndDropService
+
+<div draggable="true" @ondragstart="@OnDragStart" style="cursor: move; margin-top: 1rem;">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Data.Title</h5>
+            <p class="card-text">@Data.Content</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Todo Data { get; set;}
+
+    public void OnDragStart(DragEventArgs e)
+    {
+        DragAndDropService.StartDrag(Data);
+    }
+}

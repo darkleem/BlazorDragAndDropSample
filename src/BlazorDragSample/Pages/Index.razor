@@ -1,0 +1,77 @@
+﻿@page "/"
+
+<div class="container">
+    <div>
+        <h1>Todo List.</h1>
+    </div>
+
+    <div class="row">
+        <Droppable Drop="@OnDropTodoRow">
+            <div class="col">
+                <h2>Todo</h2>
+                @{
+                    foreach(var todo in Todos.Where(w => w.Category == TodoCategory.Todo))
+                    {
+                        <Draggable Data="todo"/>
+                    }
+                }
+            </div>
+        </Droppable>
+
+        <Droppable Drop="@OnDropTestingRow">
+            <div class="col">
+                <h2>Testing</h2>
+                @{
+                    foreach(var todo in Todos.Where(w => w.Category == TodoCategory.Testing))
+                    {
+                        <Draggable Data="todo" />
+                    }
+                }
+            </div>
+        </Droppable>
+
+        <Droppable Drop="@OnDropDoneRow">
+            <div class="col">
+                <h2>Done</h2>
+                @{
+                    foreach(var todo in Todos.Where(w => w.Category == TodoCategory.Done))
+                    {
+                        <Draggable Data="todo" />
+                    }
+                }
+            </div>
+        </Droppable>
+    </div>
+</div>
+
+@code {
+    List<Todo> Todos = new List<Todo>();
+
+    protected override void OnInitialized()
+    {
+        Todos.Add(new Todo() { Id = 0, Title = "トリッシュを護衛する", Content = "守る👩‍🦰", Category = TodoCategory.Todo});
+        Todos.Add(new Todo() { Id = 1, Title = "部下を守る", Content = "🐢含む", Category = TodoCategory.Todo});
+        Todos.Add(new Todo() { Id = 2, Title = "任務を遂行する", Content = "ペッシ🍍とプロシュート🕺を倒す", Category = TodoCategory.Todo});
+        Todos.Add(new Todo() { Id = 3, Title = "列車から飛び降りる", Content = "覚悟を決める🚂💨", Category = TodoCategory.Testing});
+        Todos.Add(new Todo() { Id = 4, Title = "駅に辿り着く", Content = "ボス👤の指令", Category = TodoCategory.Done});
+        Todos.Add(new Todo() { Id = 5, Title = "カプリ島に辿り着く", Content = "ペリーコロさん👨‍🦳に献金💰", Category = TodoCategory.Done});
+    }
+
+    void OnDropTodoRow(Todo todo)
+    {
+        todo.Category = TodoCategory.Todo;
+        StateHasChanged();
+    }
+
+    void OnDropTestingRow(Todo todo)
+    {
+        todo.Category = TodoCategory.Testing;
+        StateHasChanged();       
+    }
+
+    void OnDropDoneRow(Todo todo)
+    {
+        todo.Category = TodoCategory.Done;
+        StateHasChanged();       
+    }
+}

@@ -1,0 +1,18 @@
+@inject DragAndDropService DragAndDropService
+
+<div class="border border-info" ondragover="event.preventDefault()" @ondrop="@OnDrop" style="margin: 1rem; height: 25rem;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Action<Todo> Drop { get; set; }
+
+    public void OnDrop(DragEventArgs e)
+    {
+        Drop?.Invoke((Todo)DragAndDropService.Data);
+    }
+}
